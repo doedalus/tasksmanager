@@ -8,3 +8,6 @@ def create_task(db: Session, task: Task):
 
 def get_tasks(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Task).offset(skip).limit(limit).all()
+
+def get_task(db: Session, task_id: int):
+    return db.query(Task).filter(Task.id == task_id).one_or_none()
