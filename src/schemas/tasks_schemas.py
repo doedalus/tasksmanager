@@ -12,5 +12,11 @@ class TaskSchema(BaseModel):
 
 class CreateTaskSchema(BaseModel):
     title: str
-    description: str | None
+    description: str | None = None
     is_completed: bool = False
+
+
+class UpdateTaskSchema(BaseModel):
+    title: str | None = None
+    description: str | None = None
+    is_completed: bool | None = None
