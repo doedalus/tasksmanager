@@ -21,3 +21,6 @@ def update_task(db: Session, task: Task, data: dict):
         setattr(task, key, value)
 
     db.flush()
+
+def delete_all_tasks(db: Session):
+    db.query(Task).delete()

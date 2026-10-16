@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from src.models.tasks_models import Task
-from src.repositories.tasks_repositories import create_task, get_tasks, get_task, delete_task, update_task
+from src.repositories.tasks_repositories import create_task, get_tasks, get_task, delete_task, update_task, delete_all_tasks
 from src.helpers.mappers import from_model_to_schema
 from src.schemas.tasks_schemas import CreateTaskSchema, TaskSchema, UpdateTaskSchema
 from src.helpers.exceptions import TaskNotFound
@@ -63,3 +63,11 @@ def update_task_service(db: Session, task_id: int, payload: UpdateTaskSchema) ->
         raise
 
     return from_model_to_schema(task)
+
+def delete_all_tasks_service(db: Session) -> None:
+    try:
+        delete_all_tasks(db)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
