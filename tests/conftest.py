@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from src.models.tasks_models import Base
 from src.schemas.tasks_schemas import CreateTaskSchema
-from src.services.tasks_services import delete_all_tasks_service
+from src.services.tasks_services import delete_all_tasks_service, create_task_service
 from src.core.settings import settings
 import pytest
 
@@ -28,3 +28,7 @@ def db():
 @pytest.fixture(autouse=True)
 def clear_db(db):
     delete_all_tasks_service(db)
+
+@pytest.fixture
+def created_task(db, create_task_payload):
+    return create_task_service(db, create_task_payload)
