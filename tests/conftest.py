@@ -36,6 +36,11 @@ def test_client(db):
     yield TestClient(app)
     app.dependency_overrides.clear()
 
+@pytest.fixture()
+def create_task(test_client):
+    task = test_client.post("/tasks", json={"title": "test task1", "description": "some desc", "is_completed": False})
+    return task
+
 @pytest.fixture(autouse=True)
 def clear_db(db):
     delete_all_tasks_service(db)
